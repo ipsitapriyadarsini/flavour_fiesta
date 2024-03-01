@@ -1,16 +1,41 @@
+// {
+//   "compilerOptions": {
+//     "target": "es2017",
+//     "module": "commonjs",
+//     "outDir": "./dist",
+//     "rootDir": "./server",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "moduleResolution": "node",
+//     "skipLibCheck": true,
+//     "strictPropertyInitialization": false
+//   },
+//   "include": ["server/**/*"],
+//   "exclude": ["node_modules", "**/*.spec.ts"]
+// }
+
 {
   "compilerOptions": {
-    "target": "es2017", // Node.js version compatibility
-    "module": "commonjs", // Important for Node.js compatibility
-    "outDir": "./dist", // Output directory for compiled files
-    "rootDir": "./server", // Input directory
-    "strict": true, // Enable all strict type-checking options
-    "esModuleInterop": true, // Enables default imports from modules with no default export
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "strictPropertyInitialization": false
+    "target": "es2019", // Updated to a more recent ECMAScript target for better support of newer JS features
+    "module": "commonjs", // Suitable for Node.js projects
+    "outDir": "./dist", // Output directory for compiled JS files
+    "rootDir": "./server", // Root directory containing source TS files
+    "strict": true, // Enable strict type-checking options
+    "esModuleInterop": true, // Allows default imports from modules with no default exports
+    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in user-defined imports
+    "moduleResolution": "node", // Use Node.js module resolution mechanism
+    "skipLibCheck": true, // Skip type checking of all declaration files (*.d.ts)
+    "resolveJsonModule": true, // Allow importing JSON modules directly
+    "experimentalDecorators": true, // Enable experimental support for decorators
+    "emitDecoratorMetadata": true, // Emit design-type metadata for decorated declarations in source
+    "strictPropertyInitialization": false, // Disable strict class property initialization checks
+    "baseUrl": ".", // Base directory to resolve non-relative module names
+    "paths": {
+      // Specify paths for module names to be resolved to
+      "*": ["node_modules/*", "src/types/*"]
+    }
   },
-  "include": ["server/**/*"], // Specify the files to be compiled
-  "exclude": ["node_modules", "**/*.spec.ts"] // Exclude directories
+  "include": ["server/**/*"], // Include all files in the server directory for compilation
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"] // Exclude directories and test files from compilation
 }
