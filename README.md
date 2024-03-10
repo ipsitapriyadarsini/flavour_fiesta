@@ -57,3 +57,7 @@ npm install nodemon --save-dev (This is only required for dev env)
 ## Typescript for node, express,mongooes
 
 npm install typescript tsx @types/node @types/express @types/mongoose
+
+## Reference
+
+Express auth with mongoDB - https://www.bezkoder.com/node-js-mongodb-auth-jwt/
