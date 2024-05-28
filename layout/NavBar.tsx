@@ -12,6 +12,13 @@ const NavBar = async () => {
     await signOut();
   };
 
+  const navMenus = [
+    { label: "RECIPES", to: "/recipes" },
+    { label: "RECIPES SSR", to: "/recipes-ssr" },
+    { label: "CUISINE", to: "/cuisine" },
+    { label: "KICHEN TIPS", to: "/kitchen-tips" },
+  ];
+
   const menus = ["RECIPES", "CUISINS", "KICHEN TIPS"];
 
   const recipes = [
@@ -45,9 +52,9 @@ const NavBar = async () => {
         <span>Flavour Fiesta</span>
       </Link>
       <ul className="flex flex-1 justify-end mr-20">
-        {menus.map((menu, i) => (
-          <li className="px-5  " key={i}>
-            <Link href="/">{menu}</Link>
+        {navMenus.map(({ label, to }, i) => (
+          <li className="px-5  " key={label}>
+            <Link href={to}>{label}</Link>
           </li>
         ))}
       </ul>
