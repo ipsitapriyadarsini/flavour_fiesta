@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
-import { authConfig } from '../login/auth.config';
 import dbConnect from '@/database/db';
 import Role from '@/database/model/role.model';
 import User from '@/database/model/user.model';
+import authConfig from '../../login/auth.config';
 
 export async function POST(req: Request) {
   try {
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
     await dbConnect();
 
-    const userRole = await Role.findOne({ name: 'user' });
+    const adminRole = await Role.findOne({ name: 'admin' });
 
     const newUser = await authConfig.adapter.createUser!({
       username,
@@ -24,13 +24,13 @@ export async function POST(req: Request) {
     });
 
     const user = await User.findById(newUser.id).select('-password');
-    user.roles.push(userRole);
+    user.roles.push(adminRole);
     await user.save();
 
     return NextResponse.json({
       status: 201,
       data: user,
-      message: 'User registered successfully',
+      message: 'Admin registered successfully',
     });
   } catch (error) {
     return NextResponse.json({ status: 500, message: 'error' });

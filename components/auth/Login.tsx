@@ -1,5 +1,5 @@
 'use client';
-import { authenticate } from '@/database/actions';
+import { authenticate, authenticateAdmin } from '@/database/actions';
 import Link from 'next/link';
 import { useFormState } from 'react-dom';
 import Card from '@mui/material/Card';
@@ -25,11 +25,15 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
-const Login = () => {
+type Props = {
+  authPage?: 'user' | 'admin';
+};
+const Login = ({ authPage = 'user' }: Props) => {
+  const authAction = authPage === 'user' ? authenticate : authenticateAdmin;
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const [errorMsg, dispatch] = useFormState(authenticate, '');
+  const [errorMsg, dispatch] = useFormState(authAction, '');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);

@@ -12,7 +12,7 @@ const Recipes = () => {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {
-    fetch(`${baseUrl}/api/recipes/categories`)
+    fetch(`/api/recipes/categories`)
       .then((response) => response.json())
       .then((data) => setCategories(data.categories))
       .catch((error) => console.error('Error fetching data:', error));

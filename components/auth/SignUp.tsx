@@ -9,7 +9,11 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Button from '../inputs/Button';
 
-const SignUp = () => {
+type Props = {
+  authPage?: 'user' | 'admin';
+};
+
+const SignUp = ({ authPage = 'user' }: Props) => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -25,7 +29,9 @@ const SignUp = () => {
       return;
     }
     try {
-      const res = await fetch('api/auth/signup', {
+      const signupUrl =
+        authPage === 'user' ? '/api/auth/signup' : '/api/auth/admin/signup';
+      const res = await fetch(signupUrl, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ username: userName, email, password }),
@@ -47,7 +53,7 @@ const SignUp = () => {
   if (status === 'authenticated') return null;
 
   return (
-    <div className="flex items-center justify-center py-4 bg-slate-50">
+    <section className="flex items-center justify-center py-4 bg-slate-50">
       <Card>
         <div className="grid grid-cols-2 gap-3">
           <section className="h-full relative">
@@ -61,9 +67,11 @@ const SignUp = () => {
             />
           </section>
           <section className="my-4 me-4">
-            <div className="grid place-items-center">
-              <GoogleButton />
-            </div>
+            {authPage === 'user' && (
+              <div className="grid place-items-center">
+                <GoogleButton />
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="mt-4">
               <div className="flex items-center text-lg mb-6 md:mb-8">
                 <svg className="absolute ml-3" width="24" viewBox="0 0 24 24">
@@ -108,16 +116,19 @@ const SignUp = () => {
                 </div>
               )}
             </form>
-            <span className="my-4">
+            <span className="inline-block my-3">
               Already have an account?
-              <Link href="/login" className="underline">
+              <Link
+                href={`${authPage === 'user' ? '' : '/admin'}/login`}
+                className="underline"
+              >
                 Login
               </Link>
             </span>
           </section>
         </div>
       </Card>
-    </div>
+    </section>
   );
 };
 
